@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.3.1"
 }
 
 android {
@@ -36,14 +36,20 @@ android {
     }
 }
 
-ktlint{
+tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+
+ktlint {
+    version.set("0.48.2")
+    verbose.set(true)
     android.set(true)
     ignoreFailures.set(true)
-    disabledRules.set(setOf("no-wildcard-imports"))
-    reporters{
-           reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
-            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
-            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF)
+    }
+    filter {
+        include("**/*.kt", "**/*.kts")
     }
 }
 
