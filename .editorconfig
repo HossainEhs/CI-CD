@@ -1,0 +1,4 @@
+[*.{kt,kts}]
+no-wildcard-imports = false
+-finalnewline = false
+-finalnewline = false
